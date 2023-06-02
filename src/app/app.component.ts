@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostDataService } from './services/post-data.services';
+import { SedeService } from './services/sede.service';
 
 interface all_carreras{   
   ID_carrera: number;
@@ -53,13 +54,17 @@ export class AppComponent implements OnInit {
   experiencias: experiencia[] = [];
  
 
-  constructor(private post: PostDataService) {
+  constructor(
+    private post: PostDataService,
+    private sedeService:SedeService
+    ) {
     this.post.get_sedes().subscribe((data) => {      
       this.all_sedes = data;
     });    
     this.post.get_carreras_web().subscribe((data) => {
       this.carreras_web=data;
     })
+    this.sedeService.getSedes().subscribe()
     
   } 
   
@@ -129,44 +134,4 @@ export class AppComponent implements OnInit {
     this.textoVariable = nombreCarrera;
     this.displayedImages = this.images.slice(0, idCiclo);
   }
-  
-  //botones estaticos con id predefinido para llamar al contenido de las exp
-  mostrarPopup(experienciaId: number) {
-    console.log('mostrarPopup', experienciaId);
-this.post.get_contenido_exp(experienciaId).subscribe(data => {
-  console.log('get_contenido_exp', data);
-  const nuevaExperiencia: experiencia = {
-    titulo: data.titulo,
-    subtitulo: data.subtitulo,
-    parrafo: data.parrafo,
-    ruta_contenido: data.ruta_contenido
-  };
-  console.log('nuevaExperiencia', nuevaExperiencia);
-  this.experienciaSeleccionada = nuevaExperiencia;
-  this.showPopup = true;
-});
-  }
-  closePopup() {
-    this.showPopup = false;
-  }
-
-  abrirModal1() {
-    const btnModal1 = document.getElementById('btn-modal1');
-    if (btnModal1) {
-      btnModal1.click();
-    }
-  }
-  abrirModal2() {
-    const btnModal2 = document.getElementById('btn-modal2');
-    if (btnModal2) {
-      btnModal2.click();
-    }
-  }
-  abrirModal3() {
-    const btnModal3 = document.getElementById('btn-modal3');
-    if (btnModal3) {
-      btnModal3.click();
-    }
-  }  
-
 }

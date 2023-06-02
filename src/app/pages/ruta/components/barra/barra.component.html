@@ -1,0 +1,8 @@
+<div class="tabla-exp">
+    <div class="barras-contenido" style="display: flex; flex-direction: column; gap: 10px" [ngStyle]="tabla()">
+      <div class="barras" *ngFor="let barra of barras" [ngStyle]="posicion(barra.ciclo_inicio_barra,barra.ciclo_unlock_barra)">
+        {{ barra.descripcion_barra }}
+      </div>
+    </div>
+</div>
+  
